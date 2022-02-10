@@ -1,0 +1,12 @@
+name: opti_legume
+title: opti_legume
+username:
+account: plantmodelling
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4919156
+bundleId: 5173626
+url: https://plantmodelling.shinyapps.io/opti_legume/
+when: 1635147011.40979
+asMultiple: FALSE
+asStatic: FALSE
