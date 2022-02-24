@@ -6,7 +6,7 @@ ui <- dashboardPage(
   
   skin='green',
   
-  dashboardHeader(title = "Planificateur maraichage - V1"),
+  dashboardHeader(title = "Planificateur maraichage - V1.0"),
   
   
   dashboardSidebar(
