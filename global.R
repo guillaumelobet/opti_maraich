@@ -2,6 +2,8 @@
 library(tidyverse)
 library(readxl)
 library(lpSolveAPI)
+library(shiny)
+library(shinydashboard)
 
 # the aim of this script is to find the optimal repartition of 
 # vegetable in a market gardenning setup, based on different 

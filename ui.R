@@ -1,7 +1,6 @@
 
 
-library(shiny)
-library(shinydashboard)
+
 
 ui <- dashboardPage(
   
@@ -28,7 +27,7 @@ ui <- dashboardPage(
   dashboardBody(
     
     tabItems(
-      # Water tab content
+      # 
       tabItem(tabName = "results",
               fluidRow(
                 column(width = 4,
@@ -43,6 +42,7 @@ ui <- dashboardPage(
                                                  "Egaliser la production" = "prod_equal",
                                                  "Maximiser les calories" = "calorie",
                                                  "Minimiser l'utilisation de l'eau" = "water")
+          
                                      ), 
                          
                          selectInput("vegs_to_use",

@@ -26,6 +26,7 @@ library(shiny)
 
 shinyServer(function(input, output, clientData, session) {
   
+  
   rs <- reactiveValues(veg = NULL, 
                        output = NULL, 
                        base = NULL, 
@@ -41,23 +42,21 @@ shinyServer(function(input, output, clientData, session) {
   ## Update the UI -----
   observe({
     if(is.null(rs$veg)){return()}
+    
     vars <- unique(rs$veg$vegetable)
-    ct_options <- list()
     sel <- input$vegs_to_use
     if(length(sel) == 0) sel = vars
-    for(ct in vars) ct_options[[ct]] <- ct
-    updateSelectInput(session, "vegs_to_use", choices = ct_options, selected=sel) 
+    updateSelectInput(session, "vegs_to_use", choices = vars, selected=sel) 
   })  
+  
   
   ## Update the UI -----
   observe({
     if(is.null(rs$veg)){return()}
     vars <- unique(rs$veg$vegetable)
-    ct_options <- list()
     sel <- input$vegs_to_mod
     if(length(sel) == 0) sel = vars
-    for(ct in vars) ct_options[[ct]] <- ct
-    updateSelectInput(session, "vegs_to_mod", choices = ct_options, selected=sel) 
+    updateSelectInput(session, "vegs_to_mod", choices = vars, selected=sel) 
   })  
   
   
@@ -85,13 +84,14 @@ shinyServer(function(input, output, clientData, session) {
   }) 
   
   
+  
   observeEvent(input$updateVeg, {
     rs$veg[[input$param_to_mod]][rs$veg$vegetable == input$vegs_to_mod] <- input$param_value
-    
-    })
+  })
   
   
   
+  # Compute the base simulation, with the same surface for each vegetable
   observe({
     
     veg <- rs$veg %>% 
@@ -117,6 +117,7 @@ shinyServer(function(input, output, clientData, session) {
   })
   
   
+  # Render de plot for the base simulation
   output$surface_plot_base <- renderPlot({
     
     veg <- rs$veg %>% 
@@ -146,6 +147,7 @@ shinyServer(function(input, output, clientData, session) {
     
   })
   
+  # Render a table for the base simulation
   output$table_base <- DT::renderDataTable({
     if(is.null(rs$base)){return()}
     temp <- rs$base
@@ -156,7 +158,7 @@ shinyServer(function(input, output, clientData, session) {
   
   
   
-  # optimize
+  # optimize the surface used for each vegetalbe base ion different targets
   
   output$surface_plot <- renderPlot({
     if(is.null(rs$base)){
@@ -177,13 +179,14 @@ shinyServer(function(input, output, clientData, session) {
     surf_max <- (surf_tot / veg_min ) * input$surf_ratio
     if(surf_min > surf_max) surf_min <- surf_max
     
-    # Max cost
+    # Max cost allowed by the user
     cost_max <- input$cost_max
     if(cost_max < sum(surf_min * veg$price)){
       cost_max <- sum(surf_min * veg$price)
     }
     
     ### OPTIMISATION
+    ## Exemple and tutorial here https://www.r-bloggers.com/2012/07/linear-programming-in-r-an-lpsolveapi-example/
     
     #define the datasets
     lprec <- make.lp(0, veg_min)
@@ -225,11 +228,12 @@ shinyServer(function(input, output, clientData, session) {
     }
     
 
-
+    # solve the optimisation and get the result back
     solve(lprec)
     
     rs$optim = lprec
     
+    # Save the processed result
     output <- data.frame("Variable" = c("Surface", "Production", "Revenu", "Calorie", "Eau"), 
                             "Valeur" = c(sum(round(get.variables(lprec))),
                                         round(sum(get.variables(lprec) * veg$yield)),
@@ -242,7 +246,6 @@ shinyServer(function(input, output, clientData, session) {
     output$Difference = round(((output$Valeur / rs$base$Valeur) - 1 ) *100, 1)
     
     rs$output <- output
-    
 
     dat <- data.frame(name = veg$vegetable, 
                       surface = round(get.variables(lprec)))
