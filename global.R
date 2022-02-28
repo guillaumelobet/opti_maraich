@@ -19,3 +19,6 @@ surf_tot <- 500
 surf_min <- 10
 # Max cost
 cost_max <- 1000
+
+#CALENDRIER TEST
+calendrier <- read_xlsx("www/TestCalendrier.xlsx")

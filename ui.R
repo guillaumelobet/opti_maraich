@@ -108,7 +108,12 @@ ui <- dashboardPage(
                          tabPanel("Paramètres des légumes",
                                   DT::dataTableOutput('param_legumes'),
                                   value=2
-                         )
+                         ),
+                         tabPanel("Calendrier des légumes",
+                                  basicPage(
+                                    h2("Calendrier TEST attente des donnees"),
+                                    tableOutput("calendrier")
+                                  ))
                        )
                 )
               )
