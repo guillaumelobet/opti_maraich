@@ -275,6 +275,10 @@ shinyServer(function(input, output, clientData, session) {
     DT::datatable(temp, options = list(scrollX = TRUE, pageLength = 10))
   }) 
   
+  output$calendrier = renderTable({
+    calendrier
+  })
+  
   output$table_opt_surf <- DT::renderDataTable({
     if(is.null(rs$optim)){return(NULL)}
     
