@@ -88,9 +88,6 @@ shinyServer(function(input, output, clientData, session) {
   }) 
   
  
-  
-  
-  
   # Compute the base simulation, with the same surface for each vegetable
   observe({
     
@@ -153,9 +150,6 @@ shinyServer(function(input, output, clientData, session) {
     temp <- rs$base
     DT::datatable(temp, options = list(scrollX = TRUE, pageLength = 10))
   })   
-  
-  
-  
   
   
   # optimize the surface used for each vegetalbe base ion different targets
@@ -271,8 +265,10 @@ shinyServer(function(input, output, clientData, session) {
   
   output$param_legumes <- DT::renderDataTable({
     if(is.null(rs$veg)){return()}
-    temp <- rs$veg
-    DT::datatable(temp, options = list(scrollX = TRUE, pageLength = 10))
+    veg <- rs$veg %>% 
+      filter(vegetable %in% input$vegs_to_use)
+      temp <- veg
+      DT::datatable(temp, options = list(scrollX = TRUE, pageLength = 10))
   }) 
   
   output$calendrier = DT::renderDataTable({
