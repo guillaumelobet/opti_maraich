@@ -26,6 +26,7 @@ library(shiny)
 
 shinyServer(function(input, output, clientData, session) {
   
+  rsc <- reactiveValues(calendrier = NULL)
   
   rs <- reactiveValues(veg = NULL, 
                        output = NULL, 
@@ -39,6 +40,9 @@ shinyServer(function(input, output, clientData, session) {
   })
   
   
+  observe({
+    rsc$calendrier <- calendrier
+  })
   ## Update the UI -----
   observe({
     if(is.null(rs$veg)){return()}
@@ -83,11 +87,7 @@ shinyServer(function(input, output, clientData, session) {
     updateNumericInput(session, "param_value", value = val[[input$param_to_mod]]) 
   }) 
   
-  
-  
-  observeEvent(input$updateVeg, {
-    rs$veg[[input$param_to_mod]][rs$veg$vegetable == input$vegs_to_mod] <- input$param_value
-  })
+ 
   
   
   
@@ -275,8 +275,11 @@ shinyServer(function(input, output, clientData, session) {
     DT::datatable(temp, options = list(scrollX = TRUE, pageLength = 10))
   }) 
   
-  output$calendrier = renderTable({
-    calendrier
+  output$calendrier = DT::renderDataTable({
+    if(is.null(rsc$calendrier)){return()}
+    calendrier <- rsc$calendrier %>% 
+      filter(vegetable %in% input$vegs_to_use)
+    DT::datatable(calendrier, options = list(scrollX = TRUE, pageLength = 10))
   })
   
   output$table_opt_surf <- DT::renderDataTable({
