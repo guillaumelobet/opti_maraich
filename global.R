@@ -5,6 +5,8 @@ library(lpSolveAPI)
 library(shiny)
 library(shinydashboard)
 
+library(RCurl)
+
 # the aim of this script is to find the optimal repartition of 
 # vegetable in a market gardenning setup, based on different 
 # targets. 

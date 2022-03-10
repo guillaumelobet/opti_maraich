@@ -94,6 +94,22 @@ ui <- dashboardPage(
                                   value=1
                          ),
                          
+                         tabPanel("Fiches récapitulatives",
+                                  fluidPage(
+                                    selectInput("vegs_to_recap",
+                                                label = "Selectionner le légume",
+                                                choices = c("Wait"), selected = NULL, multiple = F),
+                                    actionButton(inputId = "updateVegrecap", label="Mettre à jours", 
+                                                 icon("cogs"), 
+                                                 style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
+                                    
+                                    titlePanel("Fiches"),
+                                    htmlOutput("recap")
+                                    
+                                  )
+                           
+                         ),
+                         
                          tabPanel("Simulation de base (surface =)",
                                   fluidRow(
                                     column(width = 6,
@@ -114,7 +130,10 @@ ui <- dashboardPage(
                                     h2("Calendrier TEST attente des donnees"),
                                     DT::dataTableOutput("calendrier"),
                                     value = 2
-                                  ))
+                         ),
+                         
+                         
+                         )
                        )
                 )
               )

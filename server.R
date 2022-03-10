@@ -74,6 +74,13 @@ shinyServer(function(input, output, clientData, session) {
     updateSelectInput(session, "param_to_mod", choices = ct_options, selected=sel) 
   }) 
   
+  observe({
+    if(is.null(rs$veg)){return()}
+    vars <- unique(rs$veg$vegetable)
+    sel <- input$vegs_to_recap
+    if(length(sel) == 0) sel = vars
+    updateSelectInput(session, "vegs_to_recap", choices = vars, selected=sel) 
+  }) 
   
   observe({
     if(is.null(rs$veg)){return()}
@@ -83,11 +90,11 @@ shinyServer(function(input, output, clientData, session) {
     if(input$vegs_to_mod == "Wait"){return()}
     
     val <- rs$veg %>% filter(vegetable == input$vegs_to_mod)
-
-    updateNumericInput(session, "param_value", value = val[[input$param_to_mod]]) 
+    updateNumericInput(session, "param_value", value = val[[input$param_to_mod]])
+    
   }) 
   
- 
+  
   # Compute the base simulation, with the same surface for each vegetable
   observe({
     
@@ -271,12 +278,32 @@ shinyServer(function(input, output, clientData, session) {
       DT::datatable(temp, options = list(scrollX = TRUE, pageLength = 10))
   }) 
   
-  output$calendrier = DT::renderDataTable({
+  #calendrier
+  output$calendrier <- DT::renderDataTable({
     if(is.null(rsc$calendrier)){return()}
     calendrier <- rsc$calendrier %>% 
       filter(vegetable %in% input$vegs_to_use)
     DT::datatable(calendrier, options = list(scrollX = TRUE, pageLength = 10))
   })
+  
+ #Fiches recap (+Update)
+  observeEvent(input$updateVegrecap,{
+    veg <- rs$veg %>% 
+      filter(vegetable %in% input$vegs_to_recap)
+    vegs <- unique(veg$vegetable)
+    for (vegetaux in vegs){
+      getPage<-function() {
+      return(includeHTML(paste0(vegetaux,".html")))}
+    }
+    if (input$vegs_to_recap == vegs){
+      getPage()
+    }
+    output$recap <- renderUI({
+      getPage()
+    })
+  })
+  
+  
   
   output$table_opt_surf <- DT::renderDataTable({
     if(is.null(rs$optim)){return(NULL)}
