@@ -128,8 +128,8 @@ ui <- dashboardPage(
                          tabPanel("Calendrier des légumes",
                                   basicPage(
                                     h2("Calendrier TEST attente des donnees"),
-                                    DT::dataTableOutput("calendrier"),
-                                    value = 2
+                                    DT::dataTableOutput("calendrier")
+                                    
                          ),
                          
                          

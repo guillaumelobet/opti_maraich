@@ -283,17 +283,30 @@ shinyServer(function(input, output, clientData, session) {
     if(is.null(rsc$calendrier)){return()}
     calendrier <- rsc$calendrier %>% 
       filter(vegetable %in% input$vegs_to_use)
-    DT::datatable(calendrier, options = list(scrollX = TRUE, pageLength = 10))
+    
+    df <- DT::datatable(calendrier, options = list(scrollX = FALSE, pageLength = 10))%>% 
+      formatStyle(c("janvier","fevrier","mars","avril","mai","juin","juillet","aout","septembre","octobre",
+                    "novembre","decembre"), backgroundColor = styleEqual(c("S", "P","R"), c('lime', 'yellow',"green"))) %>%
+      formatStyle(c("janvier","fevrier","mars","avril","mai","juin","juillet","aout","septembre","octobre",
+                    "novembre","decembre"), textAlign = "center")
   })
   
- #Fiches recap (+Update)
+ #Fiches recapitulatives (+Update) 
+  #iconv sert a convertir en UTF-8 les fichiers HTML
+  #pathwww car de base le script ne lit que les fichiers html hors www
   observeEvent(input$updateVegrecap,{
     veg <- rs$veg %>% 
       filter(vegetable %in% input$vegs_to_recap)
     vegs <- unique(veg$vegetable)
     for (vegetaux in vegs){
       getPage<-function() {
-      return(includeHTML(paste0(vegetaux,".html")))}
+        pathwww <- here()
+        setwd(paste0(pathwww,"/www"))
+        html <- includeHTML(paste0(vegetaux,".html"))
+        HTMLUTF8 <- iconv(html)
+      return(HTMLUTF8)}
+    
+      
     }
     if (input$vegs_to_recap == vegs){
       getPage()
