@@ -301,7 +301,7 @@ shinyServer(function(input, output, clientData, session) {
     for (vegetaux in vegs){
       getPage<-function() {
         pathwww <- here()
-        setwd(paste0(pathwww,"/www"))
+        setwd(paste0(pathwww,"/www/HTML"))
         html <- includeHTML(paste0(vegetaux,".html"))
         HTMLUTF8 <- iconv(html)
       return(HTMLUTF8)}
