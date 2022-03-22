@@ -46,7 +46,6 @@ shinyServer(function(input, output, clientData, session) {
   ## Update the UI -----
   observe({
     if(is.null(rs$veg)){return()}
-    
     vars <- unique(rs$veg$vegetable)
     sel <- input$vegs_to_use
     if(length(sel) == 0) sel = vars
