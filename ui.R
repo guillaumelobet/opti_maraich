@@ -41,7 +41,8 @@ ui <- dashboardPage(
                                                  "Maximiser la production" = "prod",
                                                  "Egaliser la production" = "prod_equal",
                                                  "Maximiser les calories" = "calorie",
-                                                 "Minimiser l'utilisation de l'eau" = "water")
+                                                 "Minimiser l'utilisation de l'eau" = "water",
+                                                 "Minimiser l'impact carbone" = "carbone")
           
                                      ), 
                          

@@ -108,12 +108,13 @@ shinyServer(function(input, output, clientData, session) {
 
     surface = rep(surf_tot / veg_min, veg_min)
     
-    rs$base <- data.frame("Variable" = c("Surface", "Production", "Revenu", "Calorie", "Eau"), 
+    rs$base <- data.frame("Variable" = c("Surface", "Production", "Revenu", "Calorie", "Eau","Impact Carbone"), 
                           "Valeur" = c(sum(surface),
                                        round(sum(surface * veg$yield)),
                                        round(sum(surface * veg$yield * veg$price)),
                                        round(sum(surface * veg$yield * veg$calorie)),
-                                       round(sum(surface * veg$yield * veg$water))
+                                       round(sum(surface * veg$yield * veg$water)),
+                                       round(sum(surface* veg$`Impact carbone`))
                           )
     )
     
@@ -200,6 +201,10 @@ shinyServer(function(input, output, clientData, session) {
     else if (input$target == "water"){
       lp.control(lprec, sense="min")
       set.objfn(lprec, veg$yield *veg$water) # optimize on water (minimal)      
+    }
+    else if (input$target == "carbone"){
+      lp.control(lprec, sense="min")
+      set.objfn(lprec, veg$`Impact carbone`) # optimize on carbone (minimal)    
     } 
 
     # Total surface contrains
@@ -234,12 +239,14 @@ shinyServer(function(input, output, clientData, session) {
     rs$optim = lprec
     
     # Save the processed result
-    output <- data.frame("Variable" = c("Surface", "Production", "Revenu", "Calorie", "Eau"), 
+    output <- data.frame("Variable" = c("Surface", "Production", "Revenu", "Calorie", "Eau","Impact Carbone"), 
                             "Valeur" = c(sum(round(get.variables(lprec))),
                                         round(sum(get.variables(lprec) * veg$yield)),
                                         round(sum(get.variables(lprec) * veg$yield * veg$price)),
                                         round(sum(get.variables(lprec) * veg$yield * veg$calorie)),
-                                        round(sum(get.variables(lprec) * veg$yield * veg$water))
+                                        round(sum(get.variables(lprec) * veg$yield * veg$water)),
+                                        round(sum(get.variables(lprec) * veg$`Impact carbone`))
+                                      
                             )
     )
     
@@ -283,9 +290,9 @@ shinyServer(function(input, output, clientData, session) {
     calendrier <- rsc$calendrier %>% 
       filter(vegetable %in% input$vegs_to_use)
     
-    df <- DT::datatable(calendrier, options = list(scrollX = FALSE, pageLength = 10))%>% 
+    df <- DT::datatable(calendrier, options = list(scrollX = FALSE, pageLength = 17))%>% 
       formatStyle(c("janvier","fevrier","mars","avril","mai","juin","juillet","aout","septembre","octobre",
-                    "novembre","decembre"), backgroundColor = styleEqual(c("S", "P","R"), c('lime', 'yellow',"green"))) %>%
+                    "novembre","decembre"), backgroundColor = styleEqual(c("SA","SE","P","R"), c('lime','#33FF88','yellow',"green"))) %>%
       formatStyle(c("janvier","fevrier","mars","avril","mai","juin","juillet","aout","septembre","octobre",
                     "novembre","decembre"), textAlign = "center")
   })
@@ -349,10 +356,6 @@ shinyServer(function(input, output, clientData, session) {
     
     DT::datatable(temp, options = list(scrollX = TRUE, pageLength = 10))
   })  
-  
-  
-  
-  
   
   
     
