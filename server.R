@@ -299,31 +299,13 @@ shinyServer(function(input, output, clientData, session) {
   
  #Fiches recapitulatives (+Update) 
   #iconv sert a convertir en UTF-8 les fichiers HTML
-  #pathwww car de base le script ne lit que les fichiers html hors www
-  
-  #here2 function trouve sur https://stackoverflow.com/questions/65425366/here-issue-in-r-scripts afin de diriger
-  # vers le bon path 
-  here2 <- function() {
-    args <- commandArgs(trailingOnly = FALSE)
-    if ("RStudio" %in% args) {
-      dirname(rstudioapi::getActiveDocumentContext()$path)
-    } else {
-      file_arg <- "--file="
-      filepath <- sub(file_arg, "", grep(file_arg, args, value = TRUE))
-      dirname(filepath)
-    }
-  }
-  
-  
   observeEvent(input$updateVegrecap,{
     veg <- rs$veg %>% 
       filter(vegetable %in% input$vegs_to_recap)
     vegs <- unique(veg$vegetable)
     for (vegetaux in vegs){
       getPage<-function() {
-        pathwww <- here2()
-        setwd(paste0(pathwww,"/www/HTML"))
-        html <- includeHTML(paste0(vegetaux,".html"))
+        html <- includeHTML(paste0("www/HTML/",vegetaux,".html"))
         HTMLUTF8 <- iconv(html)
       return(HTMLUTF8)}
     
