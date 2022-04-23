@@ -53,11 +53,11 @@ ui <- dashboardPage(
                          tags$hr(), 
                          numericInput("surf_tot", "Surface total de l'exploitation (m2)", surf_tot), 
                          sliderInput("surf_min", 
-                                     "Surface minimale d'une planche (m2)", 
+                                     "Surface minimale par légume (m2)", 
                                      min = 0, max=floor(surf_tot / veg_min), step = 5, value = surf_min),
                          sliderInput("surf_ratio", 
                                      "Ratio entre la plus petite et la plus grande planche", 
-                                     min = 1, max=4, step = 0.1, value = 1.3),
+                                     min = 1, max=6, step = 0.1, value = 2.0),
                          numericInput("cost_max", "Coût maximal des cultures (€)", cost_max)
                          
                      ), 
@@ -104,7 +104,8 @@ ui <- dashboardPage(
                                                  icon("cogs"), 
                                                  style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
                                     
-                                    titlePanel("Fiches"),
+                                    titlePanel("Fiches techniques"),
+                                    #includeMarkdown(paste0("www/HTML/",vegetaux,".md"))
                                     htmlOutput("recap")
                                     
                                   )
@@ -128,7 +129,7 @@ ui <- dashboardPage(
                          ),
                          tabPanel("Calendrier des légumes",
                                   basicPage(
-                                    h2("Calendrier TEST attente des donnees"),
+                                    h2("Calendrier cultural"),
                                     DT::dataTableOutput("calendrier")
                                     
                          ),

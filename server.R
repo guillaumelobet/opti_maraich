@@ -43,13 +43,15 @@ shinyServer(function(input, output, clientData, session) {
   observe({
     rsc$calendrier <- calendrier
   })
+  
   ## Update the UI -----
   observe({
     if(is.null(rs$veg)){return()}
     vars <- unique(rs$veg$vegetable)
-    sel <- input$vegs_to_use
+    #perenne <- c("artichaut","asperge","cassis","fenouil doux","fraisier","framboise","groseiller","kiwi","myrtille","oignon","poireau","pomme de terre")
+    sel <- input$vegs_to_use 
     if(length(sel) == 0) sel = vars
-    updateSelectInput(session, "vegs_to_use", choices = vars, selected=sel) 
+    updateSelectInput(session, "vegs_to_use", choices = vars, selected= sel) 
   })  
   
   
@@ -292,7 +294,8 @@ shinyServer(function(input, output, clientData, session) {
     
     df <- DT::datatable(calendrier, options = list(scrollX = FALSE, pageLength = 17))%>% 
       formatStyle(c("janvier","fevrier","mars","avril","mai","juin","juillet","aout","septembre","octobre",
-                    "novembre","decembre"), backgroundColor = styleEqual(c("SA","SE","P","R"), c('lime','#33FF88','yellow',"green"))) %>%
+                    "novembre","decembre"), backgroundColor = styleEqual(c("SA","SE","P","R","SE/P","SA/SE","SE/R","P/R","R/P","SE/P/R"),
+                c('lime','#33FF88','yellow',"green","#CCFF66","#66FF66","#66CC00","#999933","#999933","#666600"))) %>%
       formatStyle(c("janvier","fevrier","mars","avril","mai","juin","juillet","aout","septembre","octobre",
                     "novembre","decembre"), textAlign = "center")
   })
@@ -305,19 +308,19 @@ shinyServer(function(input, output, clientData, session) {
     vegs <- unique(veg$vegetable)
     for (vegetaux in vegs){
       getPage<-function() {
-        html <- includeHTML(paste0("www/HTML/",vegetaux,".html"))
-        HTMLUTF8 <- iconv(html)
-      return(HTMLUTF8)}
+        md <- includeMarkdown(paste0("www/HTML/",vegetaux,".md"))
+        return(md)}
     
+    }
+      if (input$vegs_to_recap == vegs){
+        getPage()
+      }
       
-    }
-    if (input$vegs_to_recap == vegs){
-      getPage()
-    }
-    output$recap <- renderUI({
-      getPage()
+      output$recap <- renderUI({
+        getPage()
+        })
+    
     })
-  })
   
   
   
@@ -341,5 +344,5 @@ shinyServer(function(input, output, clientData, session) {
   
   
     
-  }
+ }
 )
