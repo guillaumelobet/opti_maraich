@@ -24,7 +24,7 @@ Les maladies les plus problématique pour la partie racinaire sont la fonte des 
 <br>  
 <br>
       
-source : Wikipédia
+source : Réseaux GAB/FRAB.(Décembre 2021). Fiche technique carotte. Disponible ici : https://www.agrobio-bretagne.org/voy_content/uploads/2021/12/Web_4-CAROTTE.pdf
 
 
 
