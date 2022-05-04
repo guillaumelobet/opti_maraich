@@ -6,7 +6,7 @@ Le radis cultivé (Raphanus sativus) est une plante potagère annuelle ou bisann
 
 ## Association  
 
-**+ :**   Carotte, laitue, oignon
+**+ :**   Carotte, laitue, oignon  
 **- :**   Cerfeuil
 
 ## Culture  
