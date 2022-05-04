@@ -6,7 +6,7 @@ Le poireau (Allium ampelopresum var. pourrum) est une plante herbacée vivace cu
 
 ## Association  
 
-**+ :**   Céleri, chou, cresson, mâche, salades, tomate, asperge.
+**+ :**   Céleri, chou, cresson, mâche, salades, tomate, asperge  
 **- :**  Harictots, pois, ail, betterave.
 
 ## Culture  
