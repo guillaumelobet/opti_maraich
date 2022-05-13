@@ -182,17 +182,24 @@ shinyServer(function(input, output, clientData, session) {
   
     #slider interactif avec UpdateSliderInput
     observe({
-      updateSliderInput(session, "surf_ratio", max=round(surf_tot/100), min =(round((surf_tot/veg_min/surf_min),1)+0.1), step = 0.1)
-    })
-    observe({
       updateSliderInput(session, "surf_min", max=floor(surf_tot/50), min =0, step = 1)
-    })
+      if (surf_min != 0) {
+        updateSliderInput(session, "surf_ratio", max=round(surf_tot/100), min =(round((surf_tot/veg_min/surf_min),1)+0.1), step = 0.1)
+      } else{
+        updateSliderInput(session, "surf_ratio", max=round(surf_tot/100), min =1, step = 0.1)
+      }
+    }) 
     
+    #surf_min et max
     surf_min <- input$surf_min
-    surf_max <- surf_min * input$surf_ratio
+    
+    if (surf_min != 0) {
+      surf_max <- surf_min * input$surf_ratio
+    } else{
+      surf_max <- (surf_tot / veg_min ) * input$surf_ratio
+    }
     if(surf_min < input$surf_min) surf_min <- input$surf_min
     if(surf_min > surf_max) surf_min <- surf_max
-    
     
     # Max cost allowed by the user
     cost_max <- input$cost_max
