@@ -48,7 +48,8 @@ shinyServer(function(input, output, clientData, session) {
   observe({
     if(is.null(rs$veg)){return()}
     vars <- unique(rs$veg$vegetable)
-    #perenne <- c("artichaut","asperge","cassis","fenouil doux","fraisier","framboise","groseiller","kiwi","myrtille","oignon","poireau","pomme de terre")
+    #perenne <- c("artichaut","asperge","cassis","fenouil doux","fraisier","framboise","groseiller","kiwi","myrtille")
+    
     sel <- input$vegs_to_use 
     if(length(sel) == 0) sel = vars
     updateSelectInput(session, "vegs_to_use", choices = vars, selected= sel) 
@@ -178,9 +179,20 @@ shinyServer(function(input, output, clientData, session) {
     veg_min <- length(unique(veg$vegetable))
     
     # min surface for one parcel, in m2
+  
+    #slider interactif avec UpdateSliderInput
+    observe({
+      updateSliderInput(session, "surf_ratio", max=round(surf_tot/100), min =(round((surf_tot/veg_min/surf_min),1)+0.1), step = 0.1)
+    })
+    observe({
+      updateSliderInput(session, "surf_min", max=floor(surf_tot/50), min =0, step = 1)
+    })
+    
     surf_min <- input$surf_min
-    surf_max <- (surf_tot / veg_min ) * input$surf_ratio
+    surf_max <- surf_min * input$surf_ratio
+    if(surf_min < input$surf_min) surf_min <- input$surf_min
     if(surf_min > surf_max) surf_min <- surf_max
+    
     
     # Max cost allowed by the user
     cost_max <- input$cost_max
@@ -308,7 +320,7 @@ shinyServer(function(input, output, clientData, session) {
     vegs <- unique(veg$vegetable)
     for (vegetaux in vegs){
       getPage<-function() {
-        md <- includeMarkdown(paste0("www/HTML/",vegetaux,".md"))
+        md <- includeMarkdown(paste0("www/MD/",vegetaux,".md"))
         return(md)}
     
     }

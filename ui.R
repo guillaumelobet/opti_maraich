@@ -54,10 +54,10 @@ ui <- dashboardPage(
                          numericInput("surf_tot", "Surface total de l'exploitation (m2)", surf_tot), 
                          sliderInput("surf_min", 
                                      "Surface minimale par légume (m2)", 
-                                     min = 0, max=floor(surf_tot / veg_min), step = 5, value = surf_min),
+                                     min = 0, max=floor(surf_tot/veg_min), step = 5, value = surf_min),
                          sliderInput("surf_ratio", 
                                      "Ratio entre la plus petite et la plus grande planche", 
-                                     min = 1, max=6, step = 0.1, value = 2.0),
+                                     min = 1, max=6.0, step = 0.1, value = 2.0),
                          numericInput("cost_max", "Coût maximal des cultures (€)", cost_max)
                          
                      ), 
