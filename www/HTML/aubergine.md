@@ -6,8 +6,8 @@ L'aubergine (Solanum melongena) est une plante dicotylédone de la famille des S
 
 ## Association  
 
-**+ :** Estragons, carottes, haricots verts, petits pois, épinards, ail, oignon  
-**- :** 
+**+ :** Estragons, carottes, haricots verts, petits pois, épinards, ail, oignon    
+**- :** Pois, fenouil, concombre.
 
 ## Culture  
 
@@ -18,7 +18,7 @@ Le fruit est consommé immature quand il se colore en violet.
 ## Ravageurs et maladies  
 
 Les principaux ravageurs sont les pucerons, aleurodes et accariens (assez fréquent)
-Les maladies les plus problématiques sont l'oïdium, 
+Les maladies les plus problématiques sont l'oïdium, le botrytis et la colletotrichum.
   
 <br>  
 <br>
