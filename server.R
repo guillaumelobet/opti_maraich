@@ -320,7 +320,7 @@ shinyServer(function(input, output, clientData, session) {
     vegs <- unique(veg$vegetable)
     for (vegetaux in vegs){
       getPage<-function() {
-        md <- includeMarkdown(paste0("www/MD/",vegetaux,".md"))
+        md <- includeMarkdown(paste0("www/HTML/",vegetaux,".md"))
         return(md)}
     
     }
