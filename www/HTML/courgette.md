@@ -2,11 +2,12 @@
 
 ## Généralités  
 
+La courgette est une plante herbacée de la famille des Cucurbitaceae. Il s'agit d'un fruit au sens botanique du terme parce qu'elle contient les graines de la plante, elle est communément utilisée comme un légume.
 
 ## Association  
 
-**+ :**     
-**- :** 
+**+ :** haricot, oignon, échalote, pois  
+**- :** fenouil, tomate
 
 ## Culture  
 
@@ -18,13 +19,13 @@ L implementation de cette culture sous paillage vegetal, implementation prealabl
 
 ## Ravageurs et maladies  
 
-Les principaux ravageurs de   
-Les maladies les plus problématiques sont
+Les principaux ravageurs : Araignée (tisserand), puceroin et aleurode des serres.  
+Les maladies les plus problématiques sont la cladosporiose, la sclérotinia et l'oïdium.
   
 <br>  
 <br>
       
-source : Réseaux GAB/FRAB.(Décembre 2021). Fiche technique . Disponible ici : 
+source : Réseaux GAB/FRAB.(Décembre 2021). Fiche technique de la courgette. Disponible ici : https://www.agrobio-bretagne.org/voy_content/uploads/2021/12/Web_13-COURGETTE.pdf
 
 
 
